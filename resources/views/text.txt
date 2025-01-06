@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Scroll</title>
+    <style>
+        body {
+            min-height: 1000px;
+            background-color: grey;
+            color: white;
+            margin: 0;
+        }
+        #data-container {
+            margin: 20px;
+            padding: 10px;
+            background-color: #333;
+        }
+        #loading {
+            text-align: center;
+            display: none;
+            color: white;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Items</h1>
+    <div id="data-container">
+        <!-- Data akan dimuat di sini -->
+    </div>
+    <div id="loading">Loading...</div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let currentPage = 1; // Halaman saat ini
+            let isLoading = false; // Apakah sedang memuat data
+            let hasMoreData = true; // Apakah masih ada data di server
+
+            const loadMoreData = () => {
+                if (isLoading || !hasMoreData) return; // Hindari permintaan ganda
+
+                isLoading = true;
+                $('#loading').show();
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('getData') }}",
+                    data: { page: currentPage }, // Kirim parameter halaman
+                    success: function (response) {
+                        // Tambahkan data ke kontainer
+                        response.data.forEach(item => {
+                            $('#data-container').append(`<p>${item.name}</p>`);
+                        });
+
+                        // Update variabel kontrol
+                        hasMoreData = response.hasMore;
+                        currentPage += 1;
+                        isLoading = false;
+                        $('#loading').hide();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Terjadi kesalahan:', error);
+                        isLoading = false;
+                        $('#loading').hide();
+                    }
+                });
+            };
+
+            // Event scroll untuk memuat data baru saat mentok
+            $(window).on('scroll', function () {
+                const scrollPosition = $(window).scrollTop();
+                const windowHeight = $(window).height();
+                const pageHeight = $(document).height();
+
+                if (scrollPosition + windowHeight >= pageHeight - 1) {
+                    loadMoreData(); // Muat data baru
+                }
+            });
+
+            // Muat data awal
+            loadMoreData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .sidebar.closed {
+    width: 60px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 20px;
+  }
+  
+  .sidebar ul li {
+    margin: 15px 0;
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar ul li a .text {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .sidebar .toggle-btn {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    position: absolute;
+    top: 10px;
+    right: -40px;
+    font-size: 18px;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  .content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+  }
+  
+  .sidebar.closed + .content {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+  
+  /* Hide text when sidebar is closed */
+  .sidebar.closed .text {
+    display: none;
+  }
+
+
+/* UNTUK SEMUA TABLE */
+
+
+  table {
+      width: 78%;
+      border-collapse: collapse;
+  }
+  th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+  }
+  th {
+      background-color: #f4f4f4;
+  }
+  tr:nth-child(even) {
+      background-color: #f9f9f9;
+  }
+
+  /* UNTUK SEMUA FORM */
+  form{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 78%;
+  }
+
+  input{
+    padding: 10px;
+    border-radius: 8px;
+    border: 0.01px solid grey;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px 0px 10px 0px;
+  }
+
+  label{
+    margin: 25px 0px 5px 0px;
+  }
+  
